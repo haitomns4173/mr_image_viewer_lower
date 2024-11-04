@@ -27,7 +27,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private final String[] imageNames = {"ABSORBABLE.jpg", "NON-ABSORBABLE.jpg", "CMESH.jpg", "ULTRANET.jpg", "NETFIX.jpg", "NETPTFE.jpg", "NETPLER.jpg", "V-FIX.jpg"};
+    private final String[] imageNames = {"SP Promo.jpg", "CMESH.jpg", "ULTRANET.jpg", "NETPTFE.jpg", "NETPLER.jpg", "V-FIX.jpg", "Hemonet.jpg", "Netcryl.jpeg"};
     private final String folderPath = "suturePlanetImages";
 
 
@@ -83,14 +83,8 @@ public class HomeFragment extends Fragment {
     private void onImageClick(String imageName) {
         String[] imageCollectionImages;
 
-        if(imageName.equals("ABSORBABLE.jpg")){
-            imageCollectionImages = new String[]{"ABSORBABLE.jpg"};
-        }
-        else if(imageName.equals("NON-ABSORBABLE.jpg")){
-            imageCollectionImages = new String[]{"NON-ABSORBABLE.jpg"};
-        }
-        else if(imageName.equals("NETFIX.jpg")){
-            imageCollectionImages = new String[]{"NETFIX.jpg"};
+        if(imageName.equals("SP Promo.jpg")){
+            imageCollectionImages = new String[]{"SP Promo (1).jpg", "SP Promo (2).jpg"};
         }
         else if(imageName.equals("V-FIX.jpg")){
             imageCollectionImages = new String[]{"V-FIX.jpg", "V-FIX_1.jpg", "V-FIX_2.jpg"};
@@ -106,6 +100,12 @@ public class HomeFragment extends Fragment {
         }
         else if (imageName.equals("CMESH.jpg")) {
             imageCollectionImages = new String[]{"C-MESH_1.jpg", "C-MESH_2.jpg", "C-MESH_3.jpg", "C-MESH_4.jpg", "C-MESH_5.jpg", "C-MESH_6.jpg", "C-MESH_7.jpg", "C-MESH_8.jpg", "C-MESH_9.jpg", "C-MESH_10.jpg", "C-MESH_11.jpg", "C-MESH_12.jpg", "C-MESH_13.jpg", "C-MESH_14.jpg", "C-MESH_15.jpg", "C-MESH_16.jpg"};
+        }
+        else if (imageName.equals("Hemonet.jpg")) {
+            imageCollectionImages = new String[]{"Hemonet_1.jpg", "Hemonet_2.jpg"};
+        }
+        else if (imageName.equals("Netcryl.jpeg")) {
+            imageCollectionImages = new String[]{"Netcryl (1).jpeg", "Netcryl (2).jpeg", "Netcryl (3).jpeg", "Netcryl (4).jpeg", "Netcryl (5).jpeg", "Netcryl (6).jpeg", "Netcryl (7).jpeg", "Netcryl (8).jpeg", "Netcryl (9).jpeg", "Netcryl (10).jpeg", "Netcryl (11).jpeg", "Netcryl (12).jpeg", "Netcryl (13).jpeg", "Netcryl (14).jpeg", "Netcryl (15).jpeg", "Netcryl (16).jpeg", "Netcryl (17).jpeg", "Netcryl (18).jpeg", "Netcryl (19).jpeg", "Netcryl (20).jpeg", "Netcryl (21).jpeg", "Netcryl (22).jpeg", "Netcryl (23).jpeg"};
         }
         else {
             imageCollectionImages = new String[]{"ABSORBABLE.jpg", "NON-ABSORBABLE.jpg", "NETFIX.jpg"};
