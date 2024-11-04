@@ -18,6 +18,10 @@ public class SingleImageFullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_image_fullscreen);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         PhotoView imageView = findViewById(R.id.fullscreenImageView);
         String imageName = getIntent().getStringExtra("imageName");
         String folderPath = getIntent().getStringExtra("folderPath");

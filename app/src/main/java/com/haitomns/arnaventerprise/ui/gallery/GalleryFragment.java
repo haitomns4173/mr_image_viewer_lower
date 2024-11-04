@@ -75,7 +75,23 @@ public class GalleryFragment extends Fragment {
     }
 
     private void onImageClick(String imageName) {
-        String[] imageCollectionImages =new String[] {"AZIBIAL.jpg", "BAFTOR.jpg", "RANDIP.jpg", "RARICAP.jpg", "CLARIMYCIN.jpg"};
+        String[] imageCollectionImages = new String[] {"AZIBIAL.jpg", "BAFTOR.jpg", "RANDIP.jpg", "RARICAP.jpg", "CLARIMYCIN.jpg"};
+
+        if (imageName.equals("AZIBIAL.jpg")) {
+            imageCollectionImages = new String[]{"AZIBIAL.jpg", "BAFTOR.jpg", "RANDIP.jpg", "RARICAP.jpg", "CLARIMYCIN.jpg"};
+        }
+        else if (imageName.equals("BAFTOR.jpg")) {
+            imageCollectionImages = new String[]{"BAFTOR.jpg", "AZIBIAL.jpg", "RANDIP.jpg", "RARICAP.jpg", "CLARIMYCIN.jpg"};
+        }
+        else if (imageName.equals("RANDIP.jpg")) {
+            imageCollectionImages = new String[]{"RANDIP.jpg", "AZIBIAL.jpg", "BAFTOR.jpg", "RARICAP.jpg", "CLARIMYCIN.jpg"};
+        }
+        else if (imageName.equals("RARICAP.jpg")) {
+            imageCollectionImages = new String[]{"RARICAP.jpg", "AZIBIAL.jpg", "BAFTOR.jpg", "RANDIP.jpg", "CLARIMYCIN.jpg"};
+        }
+        else {
+            imageCollectionImages = new String[]{"CLARIMYCIN.jpg", "AZIBIAL.jpg", "BAFTOR.jpg", "RANDIP.jpg", "RARICAP.jpg"};
+        }
 
         Intent intent = new Intent(getContext(), FullscreenViewActivity.class);
         intent.putExtra("imageName", imageName);
