@@ -3,10 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.chrisbanes.photoview.PhotoView
-        android:id="@+id/fullscreenImageView"
+    <!-- ViewPager to enable swiping between images -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerInside" />
+        android:layout_height="match_parent">
+
+        <!-- PhotoView inside ViewPager to enable zooming functionality -->
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/fullscreenImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside" />
+
+    </androidx.viewpager.widget.ViewPager>
 
 </RelativeLayout>

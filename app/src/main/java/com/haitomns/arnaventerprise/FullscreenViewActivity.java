@@ -26,6 +26,7 @@ public class FullscreenViewActivity extends AppCompatActivity {
     private int currentPosition;
     private List<String> imageNames; // Add this line
 
+    private String[] imageCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class FullscreenViewActivity extends AppCompatActivity {
 
         // Retrieve data from Intent
         folderPath = getIntent().getStringExtra("folderPath");
-        String[] imageCollection = getIntent().getStringArrayExtra("imagesCollection");
+        imageCollection = getIntent().getStringArrayExtra("imagesCollection");
         currentPosition = getIntent().getIntExtra("position", 0); // Default to the first image
 
         // Check if imageCollection is valid
@@ -74,12 +75,10 @@ public class FullscreenViewActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        // Assuming you have already loaded the imageNames and imageBitmaps lists
-        ImagePagerAdapter adapter = new ImagePagerAdapter(this, imageBitmaps, imageNames, folderPath);
+        ImagePagerAdapter adapter = new ImagePagerAdapter(this, imageBitmaps, imageNames, folderPath, imageCollection);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(currentPosition); // Set the current item to the clicked position
     }
-
 
     private void setupThumbnailRecyclerView() {
         thumbnailRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

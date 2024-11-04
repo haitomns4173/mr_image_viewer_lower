@@ -17,12 +17,15 @@ public class ImagePagerAdapter extends PagerAdapter {
     private List<String> imageNames; // Add this to hold the image names
     private String folderPath; // Add this to hold the folder path
 
+    private String[] imageCollection;
+
     // Update the constructor to accept image names and folder path
-    public ImagePagerAdapter(Context context, List<Bitmap> imageBitmaps, List<String> imageNames, String folderPath) {
+    public ImagePagerAdapter(Context context, List<Bitmap> imageBitmaps, List<String> imageNames, String folderPath, String[] imageCollection) {
         this.context = context;
         this.imageBitmaps = imageBitmaps;
         this.imageNames = imageNames;
         this.folderPath = folderPath;
+        this.imageCollection = imageCollection;
     }
 
     @Override
@@ -34,14 +37,15 @@ public class ImagePagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.image_page, container, false);
+
         ImageView imageView = view.findViewById(R.id.imageView);
         imageView.setImageBitmap(imageBitmaps.get(position));
 
-        // Handle click to open SingleImageViewActivity
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SingleImageFullscreenActivity.class);
-            intent.putExtra("imageName", imageNames.get(position)); // Pass the image name
-            intent.putExtra("folderPath", folderPath); // Pass the folder path
+            intent.putExtra("imageCollection", imageCollection); // Pass the entire image collection
+            intent.putExtra("folderPath", folderPath);           // Pass the folder path
+            intent.putExtra("position", position);               // Pass the starting position
             context.startActivity(intent);
         });
 

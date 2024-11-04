@@ -1,17 +1,30 @@
 package com.haitomns.arnaventerprise;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.github.chrisbanes.photoview.PhotoView;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+// SingleImageFullscreenActivity.java
 public class SingleImageFullscreenActivity extends AppCompatActivity {
+
+    private ViewPager viewPager;
+    private int startPosition;
+    Context context = this;
+    List<Bitmap> categoryImages; // List of bitmaps for images in the selected category
+    List<String> imageNames;     // List of names for each image in the selected category
+    String folderPath;
+    String[] imageCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,24 +35,35 @@ public class SingleImageFullscreenActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        PhotoView imageView = findViewById(R.id.fullscreenImageView);
-        String imageName = getIntent().getStringExtra("imageName");
-        String folderPath = getIntent().getStringExtra("folderPath");
+        viewPager = findViewById(R.id.viewPager);
 
-        if (imageName != null && folderPath != null) {
-            loadImage(imageName, folderPath, imageView);
+        // Retrieve the image collection and folder path from the intent
+        folderPath = getIntent().getStringExtra("folderPath");
+        imageCollection = getIntent().getStringArrayExtra("imageCollection");
+        startPosition = getIntent().getIntExtra("position", 0);
+
+        loadCategoryImages(folderPath, imageCollection);
+        setupViewPager();
+    }
+
+    private void loadCategoryImages(String folderPath, String[] imageCollection) {
+        categoryImages = new ArrayList<>();
+        for (String imageName : imageCollection) {
+            try {
+                AssetManager assetManager = getAssets();
+                InputStream is = assetManager.open(folderPath + "/" + imageName);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                categoryImages.add(bitmap);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void loadImage(String imageName, String folderPath, PhotoView imageView) {
-        try {
-            AssetManager assetManager = getAssets();
-            InputStream is = assetManager.open(folderPath + "/" + imageName);
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
-            imageView.setImageBitmap(bitmap);
-            is.close(); // Close the stream after loading the image
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void setupViewPager() {
+        ImagePagerAdapter adapter = new ImagePagerAdapter(context, categoryImages, imageNames, folderPath, imageCollection);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(startPosition); // Start from the clicked image
     }
 }
