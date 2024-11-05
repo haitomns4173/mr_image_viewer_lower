@@ -9,13 +9,15 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.github.chrisbanes.photoview.PhotoView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-// SingleImageFullscreenActivity.java
 public class SingleImageFullscreenActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
@@ -25,6 +27,8 @@ public class SingleImageFullscreenActivity extends AppCompatActivity {
     List<String> imageNames;     // List of names for each image in the selected category
     String folderPath;
     String[] imageCollection;
+
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,18 @@ public class SingleImageFullscreenActivity extends AppCompatActivity {
 
         loadCategoryImages(folderPath, imageCollection);
         setupViewPager();
+
+        // Initialize GestureDetector to listen for single taps
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                //echo that the single tap was detected
+                Toast.makeText(context, "Tap Detected", Toast.LENGTH_SHORT).show();
+                return super.onSingleTapConfirmed(e);
+            }
+        });
+
+        viewPager.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
     }
 
     private void loadCategoryImages(String folderPath, String[] imageCollection) {
@@ -62,7 +78,7 @@ public class SingleImageFullscreenActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        ImagePagerAdapter adapter = new ImagePagerAdapter(context, categoryImages, imageNames, folderPath, imageCollection);
+        ZoomableImageAdapter adapter = new ZoomableImageAdapter(context, categoryImages);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(startPosition); // Start from the clicked image
     }

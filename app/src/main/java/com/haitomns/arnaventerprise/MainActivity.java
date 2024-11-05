@@ -1,12 +1,10 @@
 package com.haitomns.arnaventerprise;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,14 +14,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.haitomns.arnaventerprise.databinding.ActivityMainBinding;
 
+import java.time.LocalDate; // Import LocalDate
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
+    // Set your expiration date (example: November 8, 2024)
+    private static final LocalDate EXPIRATION_DATE = LocalDate.of(2025, 11, 15);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if the current date is past the expiration date
+        LocalDate currentDate = LocalDate.now();
+        if (currentDate.isAfter(EXPIRATION_DATE) || currentDate.isEqual(EXPIRATION_DATE)) {
+            showExpirationDialog(); // Show dialog if expired
+            return; // Prevent the app from continuing
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -32,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_dashboard, R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_setting, R.id.nav_account)
                 .setOpenableLayout(drawer)
@@ -43,9 +52,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    private void showExpirationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Application Expired")
+                .setMessage("The application has expired. Please renew it.")
+                .setPositiveButton("OK", (dialog, which) -> finish()) // Close the app on OK
+                .setCancelable(false)
+                .show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
